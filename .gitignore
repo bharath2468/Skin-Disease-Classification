@@ -127,7 +127,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
+.skincancer
+skincancer/
 # Spyder project settings
 .spyderproject
 .spyproject
