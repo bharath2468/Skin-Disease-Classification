@@ -8,7 +8,7 @@ __version__ = "0.0.0"
 
 REPO_NAME = "Skin-Disease-Prediction"
 AUTHOR_USER_NAME = "bharath2468"
-SRC_REPO = "skin-disease"
+SRC_REPO = "skindisease"
 AUTHOR_EMAIL = "bharath29704@gmail.com"
 
 
