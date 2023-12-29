@@ -2,7 +2,6 @@ import os
 import zipfile
 import gdown
 from skindisease import logger
-from skindisease.utils.common import get_size
 from skindisease.entity.config_entity import DataIngestionConfig
 
 
