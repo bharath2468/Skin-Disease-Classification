@@ -15,5 +15,6 @@ joblib
 types-PyYAML
 scipy
 Flask
+gunicorn
 Flask-Cors
 -e .
