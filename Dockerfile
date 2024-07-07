@@ -9,7 +9,7 @@ RUN pip install -r requirements.txt
 
 FROM node:16 AS build-react
 
-WORKDIR /app/frontend
+WORKDIR /app/front-end
 RUN npm install
 RUN npm run build
 
