@@ -19,8 +19,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Navigate to front-end directory
-        run: cd front-end
+      - name: Navigate to repository root
+        run: cd $GITHUB_WORKSPACE
 
       - name: Install Node.js and npm
         uses: actions/setup-node@v2
