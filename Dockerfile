@@ -9,8 +9,10 @@ RUN pip install -r requirements.txt
 
 FROM node:16 AS build-react
 
-WORKDIR /app/front-end
+COPY front-end/package.json front-end/package-lock.json ./
 RUN npm install
+
+COPY front-end/ ./
 RUN npm run build
 
 WORKDIR /app
