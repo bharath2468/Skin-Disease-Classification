@@ -1,9 +1,25 @@
 FROM python:3.8-slim-buster
 
 RUN apt update -y && apt install awscli -y
+
+WORKDIR /app
+COPY . /app
+
+RUN pip install -r requirements.txt
+
+FROM node:16 AS build-react
+
+WORKDIR /app/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+
+RUN npm install
+
+COPY frontend/ ./
+RUN npm run build
+
 WORKDIR /app
 
-COPY . /app
-RUN pip install -r requirements.txt
+EXPOSE 3000
+EXPOSE 8080
 
 CMD ["python3", "app.py"]

@@ -20,14 +20,6 @@ class ClientApp:
 
 
 
-
-@app.route("/", methods=['GET'])
-@cross_origin()
-def home():
-    return render_template('index.html')
-
-
-
 @app.route("/train", methods=['GET','POST'])
 @cross_origin()
 def trainRoute():
@@ -50,4 +42,5 @@ def predictRoute():
 
 if __name__ == "__main__":
     clApp = ClientApp()
+    #app.run(port=8080,debug=True)
     app.run(host='0.0.0.0', port=8080)
