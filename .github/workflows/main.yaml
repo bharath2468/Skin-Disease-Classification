@@ -19,14 +19,35 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Lint code
-        run: echo "Linting repository"
+      - name: Navigate to front-end directory
+        run: cd front-end
 
-      - name: Run unit tests
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint for front-end
+        run: npm run lint
+
+      - name: Navigate back to root directory
+        run: cd ..
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
         run: |
-          # Assuming you have Jest for JS and pytest for Python
-          npm test
-          pytest
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run flake8 for Python files
+        run: flake8 .
 
   build-and-push-ecr-image:
     name: Continuous Delivery
