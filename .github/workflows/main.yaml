@@ -83,8 +83,8 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker-compose -f $ECR_REGISTRY/$ECR_REPOSITORY build
-          docker-compose -f $ECR_REGISTRY/$ECR_REPOSITORY push
+          docker-compose -f docker-compose.yaml build
+          docker-compose -f docker-compose.yaml push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
 
@@ -110,9 +110,9 @@ jobs:
         run: |
           docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
-      - name: Run Docker Compose
+      - name: Run Docker Image to serve users
         run: |
-            docker-compose -f $ECR_REGISTRY/$ECR_REPOSITORY up -d \
+            docker-compose -f docker-compose.yaml up \
             -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' \
             -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
             -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  \
