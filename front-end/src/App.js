@@ -35,7 +35,7 @@ function App() {
     setLoading(true);
     const base64Image = imageSrc.split(',')[1]; // Extract base64 string without the data URL prefix
     try {
-      const response = await axios.post('http://localhost:8080/predict', {
+      const response = await axios.post('http://15.206.212.49:8080/predict', {
         image: base64Image
       });
       setResult(response.data);
