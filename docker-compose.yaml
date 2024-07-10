@@ -2,20 +2,17 @@ version: '3.8'
 
 services:
   frontend:
-    build:
-      context: ./front-end
-      dockerfile: Dockerfile
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:frontend-${IMAGE_TAG}
     ports:
       - "3000:3000"
     working_dir: /app
     command: ["npm", "start"]
     
   backend:
-    build:
-      context: ./
-      dockerfile: Dockerfile
+    image: ${ECR_REGISTRY}/${ECR_REPOSITORY}:backend-${IMAGE_TAG}
     ports:
       - "8080:8080"
     command: ["python3", "app.py"]
     depends_on:
       - frontend
+      
