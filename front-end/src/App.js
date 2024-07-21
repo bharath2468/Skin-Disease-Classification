@@ -1,7 +1,14 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import './App.css';
-
+import CellulitisInfo from './details/cellulitis.js';
+import AltheleteFootInfo from './details/athlete_foot.js';
+import ImpetigoInfo from './details/impetigo.js';
+import ChickenPoxInfo from './details/chickenpox.js';
+import NailFungusInfo from './details/nail_fungus.js';
+import LarvaInfo from './details/larva_migrans.js';
+import RingWormInfo from './details/ringworm.js';
+import ShinglesInfo from './details/shingles.js';
 function App() {
   const [imageSrc, setImageSrc] = useState(null);
   const [result, setResult] = useState(null);
@@ -34,19 +41,32 @@ function App() {
 
     setLoading(true);
     const base64Image = imageSrc.split(',')[1]; // Extract base64 string without the data URL prefix
+    const AWS_url = 'http://13.202.151.199:8080/predict';
+    const local_host = 'http://localhost:8080/predict';
     try {
-      const response = await axios.post('http://13.202.151.199:8080/predict', {
+      const response = await axios.post(local_host, {
         image: base64Image
       });
       setResult(response.data);
+      console.log(response.data[0]['image'])
     } catch (error) {
-      console.error('Error during prediction:', error);
+      console.error('Error connecting localHost:', error);
+      try {
+      const response = await axios.post(AWS_url, {
+        image: base64Image
+      });
+      console.log('Response from AWS:', response.data);
+      setResult(response.data);
+    } catch (AWSError) {
+      console.error('Error connecting AWS:', AWSError);
+    }
     } finally {
       setLoading(false);
     }
   };
 
-  return (
+  return (<div>
+    <div className='part1'>
     <div className="App">
       <h1 className='heading'>Skin Disease Classification</h1>
       <form className='main' onSubmit={handleSubmit}>
@@ -60,13 +80,25 @@ function App() {
         <div>
           <h2 style={{ display: 'flex', alignItems: 'center' }}>
             Prediction Result: {result.map((item, index) => (
-              <h4 key={index} style={{ marginLeft: '10px' }}>{item.image}</h4>
+              <p key={index} style={{ marginLeft: '10px' }}>{item.image}</p>
             ))}
           </h2>
         </div>
       )}
     </div>
-  );
+    </div>
+    <div className='details'>
+      {result && result[0].image === 'Cellulitis' ? <CellulitisInfo /> : null}
+      {result && result[0].image === 'Athlete-Foot' ? <AltheleteFootInfo /> : null}
+      {result && result[0].image === 'Impetigo' ? <ImpetigoInfo /> : null}
+      {result && result[0].image === 'Chickenpox' ? <ChickenPoxInfo /> : null}
+      {result && result[0].image === "Cutaneous Larva Migrans" ? <LarvaInfo /> : null}
+      {result && result[0].image === 'Nail-Fungus' ? <NailFungusInfo /> : null}
+      {result && result[0].image === 'Ringworm' ? <RingWormInfo /> : null}
+      {result && result[0].image === 'Shingles' ? <ShinglesInfo /> : null}
+    </div>
+  </div>
+      );
 }
 
 export default App;

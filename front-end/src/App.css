@@ -1,4 +1,4 @@
-body {
+.part1 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,6 +16,15 @@ body {
   border-radius: 5px;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.details {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  width: 95%;
+  background-color: #c7c0be;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .heading {
