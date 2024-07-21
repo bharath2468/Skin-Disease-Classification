@@ -41,7 +41,7 @@ function App() {
 
     setLoading(true);
     const base64Image = imageSrc.split(',')[1]; // Extract base64 string without the data URL prefix
-    const AWS_url = 'http://13.202.151.199:8080/predict';
+    const AWS_url = 'http://35.154.17.123:8080/predict';
     const local_host = 'http://localhost:8080/predict';
     try {
       const response = await axios.post(local_host, {
