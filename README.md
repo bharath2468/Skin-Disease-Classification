@@ -1,146 +1,128 @@
-# End-to-End-Skin-Disease-Classification-using-MLflow-DVC
 
+# Skin Disease Classification
 
-## Workflows
+## Project Overview
 
-1. Update config.yaml
-2. Update secrets.yaml [Optional]
-3. Update params.yaml
-4. Update the entity
-5. Update the configuration manager in src config
-6. Update the components
-7. Update the pipeline 
-8. Update the main.py
-9. Update the dvc.yaml
+The Skin Disease Classification project utilizes the VGG16 architecture as the base model, fine-tuned with a custom dataset comprising 8 classes of skin diseases. The goal of this project is to classify skin diseases accurately, and the model has achieved an accuracy of 81%.
 
+## Tech Stack
 
+- **VGG16**: Used as the base model for the classification task.
+- **Flask**: Python API for serving the model.
+- **MLflow**: Employed for ML model versioning and experiment tracking.
+- **DVC (Data Version Control)**: Utilized for version control of datasets and machine learning pipelines.
+- **Docker**: Containerization of the application for deployment.
+- **AWS**: Deployment platform for the application.
+- **React**: Frontend framework used to build the user interface.
 
-
-
-## MLflow
-
-- [Documentation](https://mlflow.org/docs/latest/index.html)
-
-- [MLflow tutorial](https://youtube.com/playlist?list=PLkz_y24mlSJZrqiZ4_cLUiP0CBN5wFmTb&si=zEp_C8zLHt1DzWKK)
-
-##### cmd
-- mlflow ui
-
-### dagshub
-[dagshub](https://dagshub.com/)
-
-MLFLOW_TRACKING_URI= \
-MLFLOW_TRACKING_USERNAME= \
-MLFLOW_TRACKING_PASSWORD= \
-python script.py
-
-Run this to export as env variables:
-
-```bash
-
-export MLFLOW_TRACKING_URI="FILL YOUR DETAILS"
-
-export MLFLOW_TRACKING_USERNAME="FILL YOUR DETAILS" 
-
-export MLFLOW_TRACKING_PASSWORD="FILL YOUR DETAILS"
+## Project Structure
 
 ```
+├── app/
+│   ├── static/
+│   ├── templates/
+│   ├── main.py          # Flask API implementation
+├── model/
+│   ├── vgg16_finetuned.h5 # Trained model weights
+│   ├── model_pipeline.py  # Pipeline for model training and evaluation
+├── dvc.yaml              # DVC pipeline configuration
+├── Dockerfile            # Docker configuration
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   └── package.json      # React app configuration
+└── README.md             # Project documentation
+```
 
+## Model Development
 
+- **Base Model**: The VGG16 architecture was chosen for its proven effectiveness in image classification tasks. It was fine-tuned using a custom dataset with 8 classes of skin diseases.
+  
+- **Fine-Tuning**: The model was trained on the custom dataset, and various hyperparameters were adjusted to improve performance. The final model achieved an accuracy of 81%.
 
-### DVC cmd
+- **Versioning**: MLflow was used to keep track of different versions of the model, allowing for easy comparison and rollback if needed.
 
-1. dvc init
-2. dvc repro
-3. dvc dag
+- **Data Management**: DVC was employed to manage dataset versions and track changes in the data pipeline, ensuring reproducibility.
 
+## Deployment
 
-## About MLflow & DVC
+- **Containerization**: The application was containerized using Docker, making it easy to deploy in any environment.
+  
+- **AWS Deployment**: The Dockerized application was deployed on the AWS platform, leveraging its scalability and reliability.
 
-MLflow
+## Pipelines
 
- - Its Production Grade
- - Trace all of your expriements
- - Logging & taging your model
+- **Data Pipeline**: A data preprocessing pipeline was created using DVC to handle the preparation of the dataset before training.
+  
+- **Model Training Pipeline**: This pipeline manages the entire model training process, from data loading and preprocessing to model training and evaluation.
 
+## Frontend
 
-DVC 
+- **React App**: The frontend was developed using React, providing an intuitive user interface where users can upload images and receive predictions on the skin disease classification.
 
- - Its very lite weight for POC only
- - lite weight expriements tracker
- - It can perform Orchestration (Creating Pipelines)
+## How to Run the Project
 
+### Prerequisites
 
+- Docker
+- AWS account
+- Python 3.x
+- Node.js and npm (for React app)
 
-# AWS-CICD-Deployment-with-Github-Actions
+### Steps
 
-## 1. Login to AWS console.
+1. **Clone the repository**:
 
-## 2. Create IAM user for deployment
+   ```bash
+   git clone https://github.com/username/skin-disease-classification.git
+   cd skin-disease-classification
+   ```
 
-	#with specific access
+2. **Set up the Python environment**:
 
-	1. EC2 access : It is virtual machine
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
-	2. ECR: Elastic Container registry to save your docker image in aws
+3. **Run the Flask API**:
 
+   ```bash
+   cd app
+   python main.py
+   ```
 
-	#Description: About the deployment
+4. **Run the React app**:
 
-	1. Build docker image of the source code
+   ```bash
+   cd frontend
+   npm install
+   npm start
+   ```
 
-	2. Push your docker image to ECR
+5. **Deploy with Docker**:
 
-	3. Launch Your EC2 
+   ```bash
+   docker build -t skin-disease-classification .
+   docker run -p 5000:5000 skin-disease-classification
+   ```
 
-	4. Pull Your image from ECR in EC2
+6. **Deploy on AWS**:
 
-	5. Lauch your docker image in EC2
+   Follow AWS instructions to deploy the Docker container.
 
-	#Policy:
+## Future Improvements
 
-	1. AmazonEC2ContainerRegistryFullAccess
+- **Improve Model Accuracy**: Explore more advanced architectures or data augmentation techniques to increase the accuracy beyond 81%.
+- **Expand Dataset**: Collect more data to cover a wider variety of skin diseases.
+- **Implement CI/CD**: Set up continuous integration and continuous deployment pipelines for faster iteration and deployment.
 
-	2. AmazonEC2FullAccess
+## License
 
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-	
-## 4. Create EC2 machine (Ubuntu) 
+## Acknowledgments
 
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-    AWS_ACCESS_KEY_ID=
-
-    AWS_SECRET_ACCESS_KEY=
-
-    AWS_REGION = us-east-1
-
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
-
-    ECR_REPOSITORY_NAME = skin_disease_classification
+- The VGG16 architecture and related research.
+- Open-source contributors of Flask, MLflow, DVC, Docker, and React.
