@@ -18,19 +18,28 @@ The Skin Disease Classification project utilizes the VGG16 architecture as the b
 ## Project Structure
 
 ```
-├── app/
-│   ├── static/
-│   ├── templates/
-│   ├── main.py          # Flask API implementation
-├── model/
-│   ├── vgg16_finetuned.h5 # Trained model weights
-│   ├── model_pipeline.py  # Pipeline for model training and evaluation
-├── dvc.yaml              # DVC pipeline configuration
-├── Dockerfile            # Docker configuration
+├── src/
+│   ├── components/      # For executing each stages
+│   ├── config/          # configuration of each stages
+│   ├── constants/       # Stores .yaml files for model config
+│   ├── entity/          # Manages Path
+│   ├── pipeline/        # Controls all the workfloe of model
+│   ├── utils/
 ├── frontend/
 │   ├── public/
 │   ├── src/
-│   └── package.json      # React app configuration
+│   |── package.json      # React app configuration
+|   |── Dockerfile        # Docker for react
+├── model/
+│   ├── model.h5          # Trained model weights
+├── artifacts/            # Stores Dataset and other files
+├── logs/
+│   ├── running_logs.log/ # Maintaining logs of all the processes
+├── dvc.yaml              # DVC pipeline configuration
+├── Dockerfile            # Docker configuration
+|── app.py                # Flask API implementation
+|── main.py               # Runs all the pipeline
+├── requirements.txt      # Used to Install all the necessary libraries
 └── README.md             # Project documentation
 ```
 
