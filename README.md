@@ -103,14 +103,52 @@ The Skin Disease Classification project utilizes the VGG16 architecture as the b
 
 5. **Deploy with Docker**:
 
-   ```bash
-   docker build -t skin-disease-classification .
-   docker run -p 5000:5000 skin-disease-classification
-   ```
+    ### Containerization with Docker Compose
 
-6. **Deploy on AWS**:
+    To deploy the application using Docker Compose, follow these steps:
+   
 
-   Follow AWS instructions to deploy the Docker container.
+    1. **Ensure Docker and Docker Compose are installed**: Verify that both Docker and Docker Compose are installed on your system.
+
+    2. **Create a `.env` file**: Define the environment variables required for the Docker Compose setup. Create a `.env` file in the same directory as your `docker-compose.yml` with the following content:
+
+        ```env
+        ECR_REGISTRY=your_ecr_registry
+        ECR_REPOSITORY=your_ecr_repository
+        IMAGE_TAG=latest
+        ```
+
+        Replace `your_ecr_registry`, `your_ecr_repository`, and `latest` with your actual ECR registry, repository, and image tag respectively.
+       
+
+    3. **Build and start the services**: Run Docker Compose to build and start the frontend and backend services.
+
+        ```bash
+        docker-compose up --build
+        ```
+
+        This command will build the Docker images and start the services as defined in the `docker-compose.yml` file. The `--build` flag ensures that the images are built according to the latest changes.
+
+    4. **Verify the deployment**: After the services are up, you can access the frontend on `http://localhost:3000` and the backend API on `http://localhost:8080`.
+
+    5. **Stop the services**: To stop the services, use:
+
+        ```bash
+       docker-compose down
+        ```
+
+
+7. Deploy on AWS
+
+     **Push Docker images to ECR**: Ensure that the Docker images for the frontend and backend are pushed to your AWS ECR repository.
+
+        ```bash
+        docker tag frontend-image ${ECR_REGISTRY}/${ECR_REPOSITORY}:frontend-${IMAGE_TAG}
+        docker tag backend-image ${ECR_REGISTRY}/${ECR_REPOSITORY}:backend-${IMAGE_TAG}
+        docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:frontend-${IMAGE_TAG}
+        docker push ${ECR_REGISTRY}/${ECR_REPOSITORY}:backend-${IMAGE_TAG}
+        ```
+     Follow AWS instructions to deploy the Docker container.
 
 ## Future Improvements
 
