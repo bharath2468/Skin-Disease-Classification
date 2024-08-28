@@ -99,13 +99,13 @@ The Skin Disease Classification project utilizes the VGG16 architecture as the b
 
    ```bash
    cd app
-   python main.py
+   python app.py
    ```
 
 4. **Run the React app**:
 
    ```bash
-   cd frontend
+   cd front-end
    npm install
    npm start
    ```
