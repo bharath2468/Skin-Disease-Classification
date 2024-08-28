@@ -14,6 +14,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
+  const detailsRef = useRef(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -62,6 +63,12 @@ function App() {
     }
     } finally {
       setLoading(false);
+      if (detailsRef.current) {
+        detailsRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center'  // Align the top of the element to the top of the scrollable area
+      });
+      }
     }
   };
 
@@ -87,7 +94,7 @@ function App() {
       )}
     </div>
     </div>
-    <div className='details'>
+    <div className='details' ref={detailsRef}>
       {result && result[0].image === 'Cellulitis' ? <CellulitisInfo /> : null}
       {result && result[0].image === 'Athlete-Foot' ? <AltheleteFootInfo /> : null}
       {result && result[0].image === 'Impetigo' ? <ImpetigoInfo /> : null}
